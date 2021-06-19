@@ -1,0 +1,15 @@
+{
+  "name": "mangoserver",
+  "version": "1.0.0",
+  "description": "Backend for 3DUI/AR project. mangodb endpoints.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "mongodb": "^3.6.9"
+  }
+}
