@@ -37,21 +37,44 @@ mongoClient.connect(url, async function (err, db) {
     const anchors = dbo.collection(collectionName);
 
     //all requests here
-    //gets an anchor by key?
+    //gets an anchor by id or by name
     app.get('/anchor', async (req, res) => {
         try {
 
             let query = req.body;
-            if (!query.hasOwnProperty('key')) {
+            let searchVar = (query.id) || (query.name) || null; //this should get
+            if (!searchVar) {
                 return res.status(400).send('Bad request');
             }
+            return anchors.findOne({ searchVar }) // still don't know exactly functions this should return the anchor json
+                .then(anchor => {
+                    console.log('anchor found is ' + anchor);
+                    return res.status(200).send(anchor);
+                })
+                .catch(err => {
+                    console.error(`Failed to find anchor: ${err}`);
+                    return res.status(500).send('Server error');
+                });
 
-            let key = query.key;
-            const anchor = await anchors.findOne({ key }); // still don't know exactly functions this should return the anchor json
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Server error');
+        }
 
-            return res.status(200).send(anchor);
+    });
 
+    //gets all anchors
+    app.get('/anchor/all', async (req, res) => {
+        try {
 
+            const anchor = await anchors.find({})
+            .then(anchors => {
+                return res.status(200).send(anchors);
+            })
+            .catch(err => {
+                console.error(`Failed to get all anchors: ${err}`);
+                return res.status(500).send('Server error');
+            });
 
         } catch (error) {
             console.log(error);

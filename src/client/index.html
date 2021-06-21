@@ -5,14 +5,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <title>DB DEMO</title>
 </head>
 
 <body>
     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <h3>This is a test main page, I will add post request to test here later</h3>
+        <h3>TEST PAGE to test Post/get requests</h3>
+        <div class="double-column">
+            <div class="half">
+                <div style="font-size: 1.6em; text-decoration: underline; color: red;">test get request</div>
+                <input type="text" id="input-id" placeholder="type id/name">
+                <span>Search by : </span> <select id="select-search-type">
+                    <option value="id"> id </option>
+                    <option value="name"> name </option>
+                    <option value="all"> all </option>
+                </select>
+                <button id="getbtn">Send get request</button>
+                <div style="font-size: 1.6em; text-decoration: underline; margin-top: 10px; color: red"> Result : </div>
+                <div class="text-box" id="get-result" style="min-height: 300px;">
+                    The json file will be displayed here
+                </div>
+            </div>
+            <div class="half">
+                <div style="font-size: 1.6em; text-decoration: underline; color: green;">Test post request</div>
+                <textarea id="post-body" placeholder="input a json anchor here" style="min-width: 80%; min-height: 200px;"></textarea>
+                <button id="postbtn">Send post request</button>
+                <div style="font-size: 1.6em; text-decoration: underline; color: green;">Result</div>
+                <div class="text-box" id="post-result">
+                    The post result (success/failure) is displayed here
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- Jquery-->
+<script src="./index.js"></script>
 </html>
