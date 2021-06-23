@@ -8,7 +8,7 @@ const collectionName = "anchors";
 
 var mongoClient = require('mongodb').MongoClient;
 app.use(express.json());
-app.use(express.static('./client'));
+app.use(express.static(__dirname + '/client'));
 
 
 //get front page
@@ -41,12 +41,14 @@ mongoClient.connect(url, async function (err, db) {
     app.get('/anchor', async (req, res) => {
         try {
 
-            let query = req.body;
+            let query = req.query;
+            console.log(query);
             let searchVar = (query.id) || (query.name) || null; //this should get
+            console.log(searchVar);
             if (!searchVar) {
                 return res.status(400).send('Bad request');
             }
-            return anchors.findOne({ searchVar }) // still don't know exactly functions this should return the anchor json
+            return anchors.findOne(query) // still don't know exactly functions this should return the anchor json
                 .then(anchor => {
                     console.log('anchor found is ' + anchor);
                     return res.status(200).send(anchor);
@@ -88,13 +90,13 @@ mongoClient.connect(url, async function (err, db) {
     app.post('/anchor', async (req, res) => {
         try {
 
-            let query = req.query;
-            if (!query.hasOwnProperty('anchor')) {
+            let query = req.body;
+            console.log(query);
+            if (!query.hasOwnProperty('name') || !query.hasOwnProperty('id')) {
                 return res.status(400).send('Bad request');
             }
 
-            let newAnchor = query.anchor;
-            const result = await anchors.insertOne(newAnchor);
+            const result = await anchors.insertOne(query);
 
             console.log('New anchor was inserted with result ' + result);
 

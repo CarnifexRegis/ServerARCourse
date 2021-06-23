@@ -32,7 +32,8 @@ indexScript.prototype.sendGetRequest = function(searchParam, searchValue){
             "content-type": "application/x-www-form-urlencoded"
         },
         success: function(data) {
-            me.$getResult.val(data);
+            console.log(data);
+            me.$getResult.text(JSON.stringify(data));
         },
 
         error: function(res, statut, error){
@@ -43,10 +44,15 @@ indexScript.prototype.sendGetRequest = function(searchParam, searchValue){
 
 indexScript.prototype.sendPstRequest = function(anchorjson){
     var me = this;
+    console.log(anchorjson)
     $.ajax({
         type: "POST",
         url: "anchor",
-        data: JSON.stringify(anchorjson),
+        data: JSON.stringify({
+            "name": "testname",
+            "id": 1,
+            "followers": [1,4,3]
+        }),
         contentType: "application/json",
         success: function(data) {
             console.log(data);
