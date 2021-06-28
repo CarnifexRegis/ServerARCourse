@@ -44,7 +44,6 @@ mongoClient.connect(url, async function (err, db) {
             let query = req.query;
             console.log(query);
             let searchVar = (query.id) || (query.name) || null; //this should get
-            console.log(searchVar);
             if (!searchVar) {
                 return res.status(400).send('Bad request');
             }
@@ -65,13 +64,24 @@ mongoClient.connect(url, async function (err, db) {
 
     });
 
+
     //gets all anchors
+    // query can contain {mapping : true} to return all anchors set as a dictionary of 
     app.get('/anchor/all', async (req, res) => {
         try {
 
-            const anchor = await anchors.find({})
-            .then(anchors => {
-                return res.status(200).send(anchors);
+            let query = req.query;
+            //TODO : Add option to return dicitonary {name : id};
+            return anchors.find()
+            .toArray()
+            .then(async anchors =>  {
+                let output;
+                if (query.mapping){
+                    output = await mapAnchors(anchors);
+                } else {
+                    output = anchors
+                }
+                return res.status(200).send(output);
             })
             .catch(err => {
                 console.error(`Failed to get all anchors: ${err}`);
@@ -92,7 +102,7 @@ mongoClient.connect(url, async function (err, db) {
 
             let query = req.body;
             console.log(query);
-            if (!query.hasOwnProperty('name') || !query.hasOwnProperty('id')) {
+            if (!query.hasOwnProperty('name')) {
                 return res.status(400).send('Bad request');
             }
 
@@ -117,7 +127,46 @@ mongoClient.connect(url, async function (err, db) {
     });
 });
 
+/*
+ * 
+ * @param {{
+ *  "id": 3,
+    "name": "dorm",
+    "anchor": {
+        "name": "Entry",
+        "id": "4b7d1d91-3805-42a9-9be1-2b3fec9e6dad",
+        "text": "",
+        "children": [
+            {
+                "name": "Door",
+                "id": "",
+                "text": "",
+                "children": []
+            }
+        ]
+    }
+}} anchors 
+ */
+async function mapAnchors(anchors){
+    console.log(anchors);
+    if (!anchors){
+        return null;
+    }
 
+
+    let output = {};
+    for(var i = 0; i<anchors.length; i++){
+        let anchor = anchors[i].anchor || null;
+
+        if (!anchor)
+            continue;
+
+        output[anchor.name] = anchor.id;
+    }
+
+    return output;
+     
+}
 /**
  * Checks if the collection anchors exists
  */

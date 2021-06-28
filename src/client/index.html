@@ -29,7 +29,13 @@
             </div>
             <div class="half">
                 <div style="font-size: 1.6em; text-decoration: underline; color: green;">Test post request</div>
-                <textarea id="post-body" placeholder="input a json anchor here" style="min-width: 80%; min-height: 200px;"></textarea>
+                {<br>
+                <div>name : <input type="text" id="post-place" placeholder="Place name"></input></div>
+                anchor : {
+                    <div>name : <input type="text" id="post-name" placeholder="Anchor name"></input></div>
+                    <div>id : <input type="text" id="post-id" placeholder="Anchor id"></input></div>
+                    children : { will be filled with hardcoded stuff}<br>
+                   }<br>}
                 <button id="postbtn">Send post request</button>
                 <div style="font-size: 1.6em; text-decoration: underline; color: green;">Result</div>
                 <div class="text-box" id="post-result">
