@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/client')); //evedbuser pwd231
 
 
 const uri = "mongodb+srv://evedbuser:pwd231@cluster0.b3kt7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new mongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //get front page
 app.get('/', (req, res) => {
