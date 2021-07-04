@@ -2,14 +2,17 @@ const express = require('express')
 const app = express()
 const path = require('path');
 const port = 3535;
-const url = "mongodb://localhost:27017/"; //still needs fixing
+//const url = "mongodb://localhost:27017/"; //still needs fixing
 const collectionName = "anchors";
 
 
 var mongoClient = require('mongodb').MongoClient;
 app.use(express.json());
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/client')); //evedbuser pwd231
 
+
+const uri = "mongodb+srv://evedbuser:pwd231@cluster0.b3kt7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //get front page
 app.get('/', (req, res) => {
@@ -21,7 +24,7 @@ app.get('/', (req, res) => {
  * DB INITIALISATION
  */
 
-mongoClient.connect(url, async function (err, db) {
+ client.connect(async function (err, db) {
     if (err) throw err;
     console.log("Database created!");
 

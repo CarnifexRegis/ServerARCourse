@@ -4,7 +4,8 @@
   "description": "Backend for 3DUI/AR project. mangodb endpoints.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/server.js"
   },
   "author": "",
   "license": "ISC",
