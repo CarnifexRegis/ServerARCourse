@@ -196,6 +196,5 @@ async function collectionExists(dbo) {
 
 
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
