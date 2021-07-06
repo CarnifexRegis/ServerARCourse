@@ -113,8 +113,10 @@ app.get('/', (req, res) => {
 
             console.log('New anchor was inserted with result ' + result);
 
-
-
+            if (result) 
+                return res.status(200).send('success');
+            else
+                return res.status(500).send('failure');
 
         } catch (error) {
             console.log(error);
