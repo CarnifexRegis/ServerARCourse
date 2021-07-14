@@ -1,4 +1,7 @@
 ### ServerARCourse
+A nodejs/mongodb web app to help store and retrieve anchor for the guide application.  
+the mongo database is hosted on mlab and the nodejs app is hosted on heroku
+https://ar-guide-project.herokuapp.com/
 
 ## Running the node js code
 - install nodejs, visual studio code (VCS) ide (best ide)

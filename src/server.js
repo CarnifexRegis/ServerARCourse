@@ -6,6 +6,7 @@ const port = 3535;
 const collectionName = "anchors";
 
 
+//mongodb initalisation
 var mongoClient = require('mongodb').MongoClient;
 app.use(express.json());
 app.use(express.static(__dirname + '/client')); //evedbuser pwd231
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
     //we use this for db requests
     const dbo = db.db("guideDB");
 
+    //check if the collection exists, if not we create it
     if (!collectionExists(dbo)) {
         let { err, res } = await dbo.createCollection("anchors");
         if (err) throw err;
@@ -69,12 +71,11 @@ app.get('/', (req, res) => {
 
 
     //gets all anchors
-    // query can contain {mapping : true} to return all anchors set as a dictionary of 
+    // query can contain {mapping : true} to return all anchors set as a dictionary of {name : id}, otherwise returns simply all anchors
     app.get('/anchor/all', async (req, res) => {
         try {
 
             let query = req.query;
-            //TODO : Add option to return dicitonary {name : id};
             return anchors.find()
             .toArray()
             .then(async anchors =>  {
@@ -99,7 +100,7 @@ app.get('/', (req, res) => {
     });
 
 
-    //post a new anchor
+    //post a new anchor, returns success or failure
     app.post('/anchor', async (req, res) => {
         try {
 
@@ -152,6 +153,12 @@ app.get('/', (req, res) => {
     }
 }} anchors 
  */
+
+/**
+ * Maps anchors to {name : id}
+ * @param {*} anchors 
+ * @returns dictionary of {name : id} of all anchors
+ */ 
 async function mapAnchors(anchors){
     console.log(anchors);
     if (!anchors){
